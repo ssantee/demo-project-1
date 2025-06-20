@@ -1,7 +1,10 @@
 package hello
 
-import "fmt"
+import (
+	"fmt"
+	"net/http"
+)
 
-func Handler() {
-	fmt.Printf("Hello, this is the Hello API handler!\n")
+func Handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello, this is the Hello API handler!\n")
 }
