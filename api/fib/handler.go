@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-var pregeneratedFibonacci = []int{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040}
+var pregeneratedSequence = []int{0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368, 75025, 121393, 196418, 317811, 514229, 832040}
 
 func Handler(w http.ResponseWriter, r *http.Request) {
 	userProvidedNumber := r.URL.Query().Get("n")
@@ -64,20 +64,21 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 
 // fibonacci generates a Fibonacci sequence up to positive integer
 // n, inclusive, starting with the specified startx and starty values.
-// For startx and starty or 0 and 1, it uses pregenerated Fibonacci numbers.
+// For startx=0 and starty=1, it uses pregenerated Fibonacci numbers.
 func fibonacci(n int, startx int, starty int) ([]int, error) {
 	if n < 0 || startx < 0 || starty < 0 {
-		return nil, errors.New("invalid input")
+		return nil, errors.New("invalid input, n, startx, and starty must be non-negative integers")
 	}
 
 	if n >= 1000000 {
-		return pregeneratedFibonacci, nil
+		return pregeneratedSequence, nil
 	}
 
+	// For standard start location, just return a chunk of the pregenerated sequence.
 	if startx == 0 && starty == 1 {
-		for i, e := range pregeneratedFibonacci {
+		for i, e := range pregeneratedSequence {
 			if e > n {
-				return pregeneratedFibonacci[:i], nil
+				return pregeneratedSequence[:i], nil
 			}
 		}
 	}
@@ -91,6 +92,7 @@ func fibonacci(n int, startx int, starty int) ([]int, error) {
 		result = append(result, starty, startx)
 	}
 
+	// start at 2 because the first two already exist
 	for i := 2; i <= n; i++ {
 		next := result[i-1] + result[i-2]
 		if next > n || next > 1000000 {
