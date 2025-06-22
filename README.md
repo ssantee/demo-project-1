@@ -8,6 +8,10 @@
 <span>
 </div>
 
+# Notes
+Ran into this issue with apparent misconfiguration of tsconfig.json.
+https://github.com/shadcn-ui/ui/issues/1092
+
 ## Overview
 
 This is a starter template using the following stack:

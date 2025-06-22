@@ -26,14 +26,18 @@ export function NavItem({
         <Link
           href={href}
           className={clsx(
-            'flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-8',
+            'flex h-9 w-9 items-left items-center rounded-lg text-muted-foreground transition-colors hover:text-foreground md:h-8 md:w-full align-middle',
             {
               'bg-accent text-black': pathname === href
             }
           )}
         >
           {children}
-          <span className="sr-only">{label}</span>
+          <span
+          className={clsx(
+            'ml-1'
+          )}
+          >{label}</span>
         </Link>
       </TooltipTrigger>
       <TooltipContent side="right">{label}</TooltipContent>
