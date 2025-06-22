@@ -18,9 +18,9 @@ export default function FibonacciDisplay({ results }: { results?: FibonacciOutpu
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[100px]">Max</TableHead>
-                            <TableHead>Overrides</TableHead>
+                            <TableHead>Starting Numbers</TableHead>
                             <TableHead>Fibonacci Sequence</TableHead>
-                            <TableHead>Generated at</TableHead>
+                            <TableHead>Generated At</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
