@@ -8,13 +8,15 @@ type FibonacciInput = {
   starty?: number;
 };
 
+const endpoint = process.env.ENDPOINT_FIB;
+
 export async function getFibonacci({n, startx, starty}: FibonacciInput): Promise<{ result?: number[]; error?: string }> {
   if (isNaN(n) || n < 0) {
     return { error: 'Invalid input' };
   }
 
   try {
-    const res = await fetch(`https://rldemo.santee.cloud/api/fib/handler?n=${n}&startx=${startx}&starty=${starty}`);
+    const res = await fetch(`${endpoint}?n=${n}&startx=${startx}&starty=${starty}`);
     if (!res.ok) {
       // Try to parse error message from the response
       let errorMsg = 'Unknown error';
