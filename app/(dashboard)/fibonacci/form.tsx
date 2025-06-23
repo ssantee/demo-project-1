@@ -2,6 +2,7 @@ import { getFibonacci } from '../actions';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import clsx from 'clsx';
 import {
     Collapsible,
     CollapsibleContent,
@@ -19,7 +20,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FibonacciOutput } from './types';
-import { Settings } from 'lucide-react';
+import { Settings, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 const schema = z.object({
     n: z.coerce
@@ -56,6 +58,8 @@ export default function FibonacciForm({
             starty: 1
         }
     });
+
+    const [isOpen, setIsOpen] = useState(false);
 
     async function onSubmit(values: formSchema) {
         setWorking(true);
@@ -120,9 +124,36 @@ export default function FibonacciForm({
                 />
 
                 <Collapsible>
-                    <CollapsibleTrigger>
-                        <Settings className="h-4 w-4" />
-                    </CollapsibleTrigger>
+                    <div className="align-middle text-right align-text-top">
+                        {form.formState.dirtyFields.startx ||
+                        form.formState.dirtyFields.starty ? (
+                            <a
+                                className="inline-block h-full text-blue-500 hover:underline cursor-pointer text-sm  align-text-top"
+                                onClick={() => {
+                                    form.resetField('startx');
+                                    form.resetField('starty');
+                                }}
+                            >
+                                Reset Overrides
+                            </a>
+                        ) : null}
+                        <CollapsibleTrigger
+                            className="min-w-[50px] mr-4 text-center inline-block"
+                            onClick={() => {
+                                setIsOpen(!isOpen);
+                            }}
+                        >
+                            <ChevronDown
+                                className={clsx(
+                                    'h-4 w-4 shrink-0 transition-transform duration-200 inline-block',
+                                    {
+                                        'rotate-180': isOpen
+                                    }
+                                )}
+                            />
+                            <Settings className="h-5 w-5 m-auto inline-block" />
+                        </CollapsibleTrigger>
+                    </div>
                     <CollapsibleContent>
                         <FormField
                             control={form.control}
@@ -168,7 +199,7 @@ export default function FibonacciForm({
                                 </FormItem>
                             )}
                         />
-                        <div className="mt-2 text-right">
+                        {/* <div className="mt-2 text-right">
                             <Button
                                 type="button"
                                 onClick={() => {
@@ -178,7 +209,7 @@ export default function FibonacciForm({
                             >
                                 Reset Overrides
                             </Button>
-                        </div>
+                        </div> */}
                     </CollapsibleContent>
                 </Collapsible>
 

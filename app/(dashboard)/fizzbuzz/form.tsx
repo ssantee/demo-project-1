@@ -2,6 +2,7 @@ import { getFibonacci, getFizzBuzz } from '../actions';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import clsx from 'clsx';
 import {
     Collapsible,
     CollapsibleContent,
@@ -19,7 +20,8 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FizzbuzzOutput } from './types';
-import { Settings } from 'lucide-react';
+import { Settings, ChevronDown } from 'lucide-react';
+import { useState } from 'react';
 
 const schema = z
     .object({
@@ -96,6 +98,8 @@ export default function FizzbuzzForm({
         }
     });
 
+    const [isOpen, setIsOpen] = useState(false);
+
     async function onSubmit(values: formSchema) {
         setWorking(true);
         setError(null);
@@ -160,9 +164,38 @@ export default function FizzbuzzForm({
                 />
 
                 <Collapsible>
-                    <CollapsibleTrigger>
-                        <Settings className="h-4 w-4" />
-                    </CollapsibleTrigger>
+                    <div className="align-middle text-right align-text-top">
+                        {form.formState.dirtyFields.fizzDivisor ||
+                        form.formState.dirtyFields.buzzDivisor ||
+                        form.formState.dirtyFields.existingCollection ? (
+                            <a
+                                className="inline-block h-full text-blue-500 hover:underline cursor-pointer text-sm  align-text-top"
+                                onClick={() => {
+                                    form.resetField('fizzDivisor');
+                                    form.resetField('buzzDivisor');
+                                    form.resetField('existingCollection');
+                                }}
+                            >
+                                Reset Overrides
+                            </a>
+                        ) : null}
+                        <CollapsibleTrigger
+                            className="min-w-[50px] mr-4 text-center inline-block"
+                            onClick={() => {
+                                setIsOpen(!isOpen);
+                            }}
+                        >
+                            <ChevronDown
+                                className={clsx(
+                                    'h-4 w-4 shrink-0 transition-transform duration-200 inline-block',
+                                    {
+                                        'rotate-180': isOpen
+                                    }
+                                )}
+                            />
+                            <Settings className="h-5 w-5 m-auto inline-block" />
+                        </CollapsibleTrigger>
+                    </div>
                     <CollapsibleContent>
                         <div className="flex flex-col md:flex-row gap-4">
                             <div className="flex-1">
@@ -239,10 +272,8 @@ export default function FizzbuzzForm({
                                 )}
                             />
                             <Form {...form2}>
-                                <button
-                                    className="mt-1 mb-2 bg-blue-500 text-blue-500 py-2 rounded hover:bg-blue-600"
-                                    disabled={working}
-                                    type="button"
+                                <a
+                                    className="mt-1 mb-2 text-blue-500 py-2 hover:underline cursor-pointer"
                                     onClick={form2.handleSubmit(
                                         async (values) => {
                                             setWorking(true);
@@ -262,7 +293,11 @@ export default function FizzbuzzForm({
                                                 form.setValue(
                                                     'existingCollection',
                                                     result.result?.join(', ') ||
-                                                        ''
+                                                        '',
+                                                    {
+                                                        shouldDirty: true,
+                                                        shouldTouch: true
+                                                    }
                                                 );
                                                 setWorking(false);
                                                 setError(null);
@@ -275,7 +310,7 @@ export default function FizzbuzzForm({
                                     )}
                                 >
                                     Use a Fibonacci sequence
-                                </button>
+                                </a>
                             </Form>
                         </div>
                         {/* <FormField
@@ -299,17 +334,18 @@ export default function FizzbuzzForm({
                                 </FormItem>
                             )}
                         /> */}
-                        <div className="mt-2 text-right">
-                            <Button
-                                type="button"
+                        {/* <div className="mt-2 text-right">
+                            <a
+                                className="mt-1 mb-2 text-blue-500 py-2 hover:underline cursor-pointer"
                                 onClick={() => {
                                     form.resetField('fizzDivisor');
                                     form.resetField('buzzDivisor');
+                                    form.resetField('existingCollection');
                                 }}
                             >
                                 Reset Overrides
-                            </Button>
-                        </div>
+                            </a>
+                        </div> */}
                     </CollapsibleContent>
                 </Collapsible>
 
