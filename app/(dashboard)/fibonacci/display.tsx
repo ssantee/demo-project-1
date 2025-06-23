@@ -29,7 +29,7 @@ export default function FibonacciDisplay({ results }: { results?: FibonacciOutpu
                                 <TableCell className="font-medium">{result.inputNumber}</TableCell>
                                 <TableCell>{result.inputStartX}, {result.inputStartY}</TableCell>
                                 <TableCell>{result.sequence.join(", ")}</TableCell>
-                                <TableCell>{result.generatedAt}</TableCell>
+                                <TableCell>{new Date(Number(result.generatedAt)).toLocaleString()}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

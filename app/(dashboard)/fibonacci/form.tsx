@@ -61,7 +61,7 @@ export default function FibonacciForm({ setResults, working, setWorking, error, 
                 inputStartX: values.startx ?? 0,
                 inputStartY: values.starty ?? 1,
                 sequence: result.result,
-                generatedAt: new Date().toLocaleString(),
+                generatedAt: Date.now().toString(),
             };
             // sort descending
             setResults(prev => [...prev, output].sort((a, b) => b.generatedAt.localeCompare(a.generatedAt)));
