@@ -20,8 +20,16 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { FizzbuzzOutput } from './types';
-import { Settings, ChevronDown } from 'lucide-react';
+import { Settings, ChevronDown, X } from 'lucide-react';
 import { useState } from 'react';
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHead,
+    TableCell,
+    TableRow
+} from '@/components/ui/table';
 
 const schema = z
     .object({
@@ -99,6 +107,11 @@ export default function FizzbuzzForm({
     });
 
     const [isOpen, setIsOpen] = useState(false);
+    const [pairNumber, setPairNumber] = useState('');
+    const [pairString, setPairString] = useState('');
+    const [alternatePairings, setAlternatePairings] = useState<
+        { number: number; string: string }[]
+    >([]);
 
     async function onSubmit(values: formSchema) {
         setWorking(true);
@@ -250,6 +263,158 @@ export default function FizzbuzzForm({
                         <div>
                             <FormField
                                 control={form.control}
+                                name="alternatePairings"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormDescription className="my-2">
+                                            Optional: Alternate Pairings -
+                                            Replace numbers with custom strings.
+                                        </FormDescription>
+                                        <div className="flex gap-2">
+                                            <FormItem>
+                                                <FormLabel>
+                                                    Pair Number
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="number"
+                                                        placeholder="Number"
+                                                        value={pairNumber}
+                                                        onChange={(e) =>
+                                                            setPairNumber(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                            <FormItem>
+                                                <FormLabel>
+                                                    Pair String
+                                                </FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        type="text"
+                                                        placeholder="String"
+                                                        value={pairString}
+                                                        onChange={(e) =>
+                                                            setPairString(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                    />
+                                                </FormControl>
+                                            </FormItem>
+                                            <FormItem className="flex items-end">
+                                                <Button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        // TODO
+                                                        // alternate pairings should be validated for dups
+                                                        if (
+                                                            pairNumber &&
+                                                            pairString
+                                                        ) {
+                                                            field.onChange([
+                                                                ...(field.value ||
+                                                                    []),
+                                                                {
+                                                                    number: Number(
+                                                                        pairNumber
+                                                                    ),
+                                                                    string: pairString
+                                                                }
+                                                            ]);
+                                                            setPairNumber('');
+                                                            setPairString('');
+                                                            setAlternatePairings(
+                                                                (prev) => [
+                                                                    ...prev,
+                                                                    {
+                                                                        number: Number(
+                                                                            pairNumber
+                                                                        ),
+                                                                        string: pairString
+                                                                    }
+                                                                ]
+                                                            );
+                                                        }
+                                                    }}
+                                                >
+                                                    Add
+                                                </Button>
+                                            </FormItem>
+                                        </div>
+                                        {alternatePairings.length > 0 && (
+                                            <div className="flex gap-2">
+                                                <Table className="w-full">
+                                                    <TableHeader>
+                                                        <TableRow>
+                                                            <TableHead>
+                                                                Pair Number
+                                                            </TableHead>
+                                                            <TableHead>
+                                                                Pair String
+                                                            </TableHead>
+                                                            <TableHead className="w-[100px]"></TableHead>
+                                                        </TableRow>
+                                                    </TableHeader>
+                                                    <TableBody>
+                                                        {(
+                                                            field.value || []
+                                                        ).map((pair, idx) => (
+                                                            <TableRow key={idx}>
+                                                                <TableCell className="p-2">
+                                                                    {
+                                                                        pair.number
+                                                                    }
+                                                                </TableCell>
+                                                                <TableCell className="p-2">
+                                                                    {
+                                                                        pair.string
+                                                                    }
+                                                                </TableCell>
+                                                                <TableCell className="p-2 w-[30px]">
+                                                                    <Button
+                                                                        variant="secondary"
+                                                                        size="icon"
+                                                                        onClick={() => {
+                                                                            const updated =
+                                                                                [
+                                                                                    {
+                                                                                        number: pair.number,
+                                                                                        string: pair.string
+                                                                                    }
+                                                                                ];
+                                                                            updated.splice(
+                                                                                idx,
+                                                                                1
+                                                                            );
+                                                                            field.onChange(
+                                                                                updated
+                                                                            );
+                                                                            setAlternatePairings(
+                                                                                updated
+                                                                            );
+                                                                        }}
+                                                                    >
+                                                                        <X className="h-4 w-4" />
+                                                                    </Button>
+                                                                </TableCell>
+                                                            </TableRow>
+                                                        ))}
+                                                    </TableBody>
+                                                </Table>
+                                            </div>
+                                        )}
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+                        <div>
+                            <FormField
+                                control={form.control}
                                 name="existingCollection"
                                 render={({ field }) => (
                                     <FormItem>
@@ -313,27 +478,6 @@ export default function FizzbuzzForm({
                                 </a>
                             </Form>
                         </div>
-                        {/* <FormField
-                            control={form.control}
-                            name="alternatePairings"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Alternate Pairings</FormLabel>
-                                    <FormDescription>
-                                        Optional: Add alternate pairings for
-                                        FizzBuzz (e.g., 7: "Bazz").
-                                    </FormDescription>
-                                    <FormControl>
-                                        <Input
-                                            type="text"
-                                            placeholder="Enter alternate pairings (e.g., 7:Bazz,11:Foo)"
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        /> */}
                         {/* <div className="mt-2 text-right">
                             <a
                                 className="mt-1 mb-2 text-blue-500 py-2 hover:underline cursor-pointer"
@@ -350,12 +494,15 @@ export default function FizzbuzzForm({
                 </Collapsible>
 
                 {working ? (
-                    <Button type="submit" disabled>
+                    <Button type="submit" disabled className="min-w-[96px]">
                         Working...
                     </Button>
                 ) : (
-                    <Button type="submit">FizzBuzz!</Button>
+                    <Button type="submit" className="min-w-[96px]">
+                        FizzBuzz!
+                    </Button>
                 )}
+
                 {/* Display error message if exists*/}
                 {error && <p className="text-red-500">{error}</p>}
             </form>

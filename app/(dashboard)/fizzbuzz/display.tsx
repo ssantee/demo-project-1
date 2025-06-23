@@ -52,7 +52,7 @@ export default function FizzbuzzDisplay({
                 </Table>
             ) : (
                 <p className="text-muted-foreground">
-                    No results yet. Submit a number to see the Fibonacci
+                    No results yet. Submit a number to see the FizzBuzz
                     sequence.
                 </p>
             )}
