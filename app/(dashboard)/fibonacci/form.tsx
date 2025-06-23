@@ -214,11 +214,13 @@ export default function FibonacciForm({
                 </Collapsible>
 
                 {working ? (
-                    <Button type="submit" disabled>
+                    <Button type="submit" disabled className="min-w-[153px]">
                         Working...
                     </Button>
                 ) : (
-                    <Button type="submit">Calculate Fibonacci</Button>
+                    <Button type="submit" className="min-w-[153px]">
+                        Calculate Fibonacci
+                    </Button>
                 )}
                 {/* Display error message if exists TODO */}
                 {error && <p className="text-red-500">{error}</p>}
