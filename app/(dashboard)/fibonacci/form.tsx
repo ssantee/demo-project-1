@@ -154,9 +154,7 @@ export default function FibonacciForm({ setResults, working, setWorking, error, 
                     ) : (
                         <Button type="submit">Calculate Fibonacci</Button>
                     )}
-                    {/* Display error message if exists
-                        TODO
-                    */}
+                    {/* Display error message if exists TODO */}
                     {error && <p className="text-red-500">{error}</p>}
                 </form>
             </Form>
