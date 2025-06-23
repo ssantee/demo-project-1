@@ -1,8 +1,5 @@
-import {
-    Home, Variable,
-    SquareFunction
-} from "lucide-react"
-
+'use client';
+import { Home, Variable, SquareFunction } from 'lucide-react';
 import {
     Sidebar,
     SidebarContent,
@@ -11,27 +8,27 @@ import {
     SidebarGroupLabel,
     SidebarMenu,
     SidebarMenuButton,
-    SidebarMenuItem,
-} from "@/components/ui/sidebar"
-
+    SidebarMenuItem
+} from '@/components/ui/sidebar';
+import { usePathname } from 'next/navigation';
 // Menu items.
 const items = [
     {
-        title: "Home",
-        url: "/",
-        icon: Home,
+        title: 'Home',
+        url: '/',
+        icon: Home
     },
     {
-        title: "FizzBuzz",
-        url: "/fizzbuzz",
-        icon: Variable,
+        title: 'FizzBuzz',
+        url: '/fizzbuzz',
+        icon: Variable
     },
     {
-        title: "Fibonacci",
-        url: "/fibonacci",
-        icon: SquareFunction,
-    },
-]
+        title: 'Fibonacci',
+        url: '/fibonacci',
+        icon: SquareFunction
+    }
+];
 
 export function AppSidebar() {
     return (
@@ -44,7 +41,14 @@ export function AppSidebar() {
                             {items.map((item) => (
                                 <SidebarMenuItem key={item.title}>
                                     <SidebarMenuButton asChild>
-                                        <a href={item.url}>
+                                        <a
+                                            href={item.url}
+                                            data-active={
+                                                usePathname() === item.url
+                                                    ? 'true'
+                                                    : 'false'
+                                            }
+                                        >
                                             <item.icon />
                                             <span>{item.title}</span>
                                         </a>
@@ -56,5 +60,5 @@ export function AppSidebar() {
                 </SidebarGroup>
             </SidebarContent>
         </Sidebar>
-    )
+    );
 }
