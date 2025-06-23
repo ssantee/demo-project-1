@@ -31,7 +31,7 @@ export default function FizzbuzzDisplay({ results }: { results?: FizzbuzzOutput[
                                 <TableCell>{result.fizzDivisor}</TableCell>
                                 <TableCell>{result.buzzDivisor}</TableCell>
                                 <TableCell>{result.sequence.join(", ")}</TableCell>
-                                <TableCell>{result.generatedAt}</TableCell>
+                                <TableCell>{new Date(Number(result.generatedAt)).toLocaleString()}</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

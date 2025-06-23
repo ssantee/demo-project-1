@@ -12,7 +12,7 @@ export type FizzbuzzOutput = {
     inputNumber: number;
     fizzDivisor?: number;
     buzzDivisor?: number;
-    existingCollection?: string[];
+    existingCollection?: string;
     alternatePairings?: { number: number; string: string }[];
     sequence: (number | string)[];
     generatedAt: string;

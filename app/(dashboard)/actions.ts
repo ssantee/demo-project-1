@@ -12,7 +12,7 @@ type FizzbuzzInput = {
   number: number;
   fizzDivisor?: number;
   buzzDivisor?: number;
-  existingCollection?: string[];
+  existingCollection?: string;
   alternatePairings?: { number: number; string: string }[];
 };
 
@@ -56,13 +56,16 @@ export async function getFizzBuzz({number, fizzDivisor, buzzDivisor, existingCol
     return { error: 'Invalid input' };
   }
 
+  // TODO alternatePairings validation
   try {
+    var ec = existingCollection?.split(',').map(item => item.trim()).map(item => parseInt(item, 10)).filter(item => !isNaN(item)) || [];
+
     const res = await fetch(`${endpointFizzBuzz}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ number, fizzDivisor, buzzDivisor, existingCollection, alternatePairings }),
+      body: JSON.stringify({ number, fizzDivisor, buzzDivisor, existingCollection: ec/*, alternatePairings */}),
     });
     if (!res.ok) {
       // Try to parse error message from the response
