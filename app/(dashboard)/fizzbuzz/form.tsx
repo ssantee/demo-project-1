@@ -179,8 +179,8 @@ export default function FizzbuzzForm({
                 <Collapsible>
                     <div className="align-middle text-right align-text-top">
                         {form.formState.dirtyFields.fizzDivisor ||
-                        form.formState.dirtyFields.buzzDivisor ||
-                        form.formState.dirtyFields.existingCollection ? (
+                            form.formState.dirtyFields.buzzDivisor ||
+                            form.formState.dirtyFields.existingCollection ? (
                             <a
                                 className="inline-block h-full text-blue-500 hover:underline cursor-pointer text-sm  align-text-top"
                                 onClick={() => {
@@ -260,7 +260,7 @@ export default function FizzbuzzForm({
                                 />
                             </div>
                         </div>
-                        <div>
+                        <div className="my-4">
                             <FormField
                                 control={form.control}
                                 name="alternatePairings"
@@ -379,23 +379,9 @@ export default function FizzbuzzForm({
                                                                         variant="secondary"
                                                                         size="icon"
                                                                         onClick={() => {
-                                                                            const updated =
-                                                                                [
-                                                                                    {
-                                                                                        number: pair.number,
-                                                                                        string: pair.string
-                                                                                    }
-                                                                                ];
-                                                                            updated.splice(
-                                                                                idx,
-                                                                                1
-                                                                            );
-                                                                            field.onChange(
-                                                                                updated
-                                                                            );
-                                                                            setAlternatePairings(
-                                                                                updated
-                                                                            );
+                                                                            const updated = (field.value || []).filter((_, i) => i !== idx);
+                                                                            field.onChange(updated);
+                                                                            setAlternatePairings(updated);
                                                                         }}
                                                                     >
                                                                         <X className="h-4 w-4" />
@@ -443,9 +429,12 @@ export default function FizzbuzzForm({
                                         async (values) => {
                                             setWorking(true);
                                             setError(null);
-                                            // use default values
+                                            // if there is a user-provided number, use that
+                                            // otherwise use the default
+                                            var enteredNum = form.getValues("number");
+
                                             var result = await getFibonacci({
-                                                n: values.n,
+                                                n: enteredNum || values.n,
                                                 startx: values.startx,
                                                 starty: values.starty
                                             });
@@ -458,7 +447,7 @@ export default function FizzbuzzForm({
                                                 form.setValue(
                                                     'existingCollection',
                                                     result.result?.join(', ') ||
-                                                        '',
+                                                    '',
                                                     {
                                                         shouldDirty: true,
                                                         shouldTouch: true
