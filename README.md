@@ -39,7 +39,7 @@ Illustration of the project structure:
 
 They are split between the UI and the serverless services.
 
-The services should be fairly easy to navigate and understand. There are two, they live under `/api`. 
+The services should be fairly easy to navigate and understand. There are two, they live under `/api`.
 
 `/api/fbz` implements the FizzBuzz logic, and `/api/fib` implements the Fibonacci logic.
 
