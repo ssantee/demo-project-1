@@ -64,7 +64,7 @@ func TestHandler(t *testing.T) {
 			method:     http.MethodPost,
 			body:       `{"number":15, "alternatePairings":{"3":"Foo", "5":"Bar", "15":"FooBar"}}`,
 			wantStatus: http.StatusOK,
-			wantBody:   []string{"1", "2", "Foo", "4", "Bar", "Fizz", "7", "8", "Fizz", "Buzz", "11", "Fizz", "13", "14", "FooBar"},
+			wantBody:   []string{"1", "2", "Foo", "4", "Bar", "Foo", "7", "8", "Foo", "Bar", "11", "Foo", "13", "14", "FooBar"},
 		},
 		{
 			name:       "Invalid POST with no number",

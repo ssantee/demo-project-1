@@ -21,6 +21,14 @@ type FizzBuzzRequest struct {
 	AlternatePairings  AlternatePairingsString `json:"alternatePairings,omitempty"`
 }
 
+type FizzBuzzPairing struct {
+	Number int    `json:"number"`
+	Value  string `json:"value"`
+}
+
+const Fizz = "Fizz"
+const Buzz = "Buzz"
+
 func Handler(w http.ResponseWriter, r *http.Request) {
 	var request FizzBuzzRequest
 	if r.Method == http.MethodPost {
@@ -50,6 +58,11 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		buzzDivisor = request.BuzzDivisor
 	}
 
+	divisorPairing := []FizzBuzzPairing{
+		{Number: fizzDivisor, Value: Fizz},
+		{Number: buzzDivisor, Value: Buzz},
+	}
+
 	var numCollection []int
 
 	// If existingCollection is provided, use it
@@ -71,7 +84,13 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		alternatePairings[intKey] = value
 	}
 
-	result := fizzBuzzIterator(numCollection, fizzDivisor, buzzDivisor, alternatePairings)
+	for i, v := range divisorPairing {
+		if alternateValue, exists := alternatePairings[v.Number]; exists {
+			divisorPairing[i].Value = alternateValue
+		}
+	}
+
+	result := fizzBuzzIterator(numCollection, divisorPairing, alternatePairings)
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(result); err != nil {
 		http.Error(w, "Error encoding response", http.StatusInternalServerError)
@@ -88,30 +107,25 @@ func numbersToN(n int) []int {
 }
 
 // fizzBuzzIterator generates a FizzBuzz sequence based on the provided numbers, divisors, and alternate pairings.
-func fizzBuzzIterator(numbers []int, fizzDivisor int, buzzDivisor int, alternates AlternatePairingsInt) []string {
+func fizzBuzzIterator(numbers []int, divisorPairing []FizzBuzzPairing, alternates AlternatePairingsInt) []string {
 
 	finalSlice := []string{}
 
-	for _, idx := range numbers {
+	if len(divisorPairing) > 2 {
+		return []string{"Error: Too many divisor pairings provided"}
+	}
+
+	for _, nbr := range numbers {
 		var str string
 
-		// if alternateValue, exists := alternates[idx]; exists {
-		// 	str = alternateValue
-		// } else
-		if idx%fizzDivisor == 0 && idx%buzzDivisor == 0 {
-			str = "FizzBuzz"
-		} else if idx%fizzDivisor == 0 {
-			str = "Fizz"
-			if alternateValue, exists := alternates[idx]; exists {
-				str = alternateValue
-			}
-		} else if idx%buzzDivisor == 0 {
-			str = "Buzz"
-			if alternateValue, exists := alternates[idx]; exists {
-				str = alternateValue
-			}
+		if nbr%divisorPairing[0].Number == 0 && nbr%divisorPairing[1].Number == 0 {
+			str = divisorPairing[0].Value + divisorPairing[1].Value
+		} else if nbr%divisorPairing[0].Number == 0 {
+			str = divisorPairing[0].Value
+		} else if nbr%divisorPairing[1].Number == 0 {
+			str = divisorPairing[1].Value
 		} else {
-			str = strconv.Itoa(idx)
+			str = strconv.Itoa(nbr)
 		}
 
 		finalSlice = append(finalSlice, str)
