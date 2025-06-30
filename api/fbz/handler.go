@@ -95,14 +95,21 @@ func fizzBuzzIterator(numbers []int, fizzDivisor int, buzzDivisor int, alternate
 	for _, idx := range numbers {
 		var str string
 
-		if alternateValue, exists := alternates[idx]; exists {
-			str = alternateValue
-		} else if idx%fizzDivisor == 0 && idx%buzzDivisor == 0 {
+		// if alternateValue, exists := alternates[idx]; exists {
+		// 	str = alternateValue
+		// } else
+		if idx%fizzDivisor == 0 && idx%buzzDivisor == 0 {
 			str = "FizzBuzz"
 		} else if idx%fizzDivisor == 0 {
 			str = "Fizz"
+			if alternateValue, exists := alternates[idx]; exists {
+				str = alternateValue
+			}
 		} else if idx%buzzDivisor == 0 {
 			str = "Buzz"
+			if alternateValue, exists := alternates[idx]; exists {
+				str = alternateValue
+			}
 		} else {
 			str = strconv.Itoa(idx)
 		}
