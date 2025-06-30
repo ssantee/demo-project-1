@@ -18,6 +18,13 @@ pnpm install
 pnpm dev
 ```
 
+### Local API testing
+
+In the env.local, swap out the `santee.cloud` endpoints for the `localhost` endpoints, then in another console window, run 
+```bash
+npm run api
+```
+
 > Don't have `pnpm`? [Find it here](https://pnpm.io/installation).
 
 > Don't want `pnpm`? `npm install` and `npm run dev` will have the same effect!
@@ -69,3 +76,12 @@ Use of Go was both for illustration of flexibility, and expedience, as I've work
 
 Ran into this issue with apparent misconfiguration of tsconfig.json.
 <https://github.com/shadcn-ui/ui/issues/1092>
+
+## TODO
+ - (Dashboard) route group is unnecessary
+   - https://nextjs.org/docs/app/getting-started/project-structure#routing-files
+ - Remove a `types.ts` from one of `/fibonacci` or `/fizzbuzz` and use a common copy
+ - customize `/app/error.tsx/`
+ - extract `about.tsx` to a common component that takes props
+    - https://react.dev/learn/passing-props-to-a-component#step-2-read-props-inside-the-child-component
+ - UI should reflect `1000000` maximium input to fibonacci
