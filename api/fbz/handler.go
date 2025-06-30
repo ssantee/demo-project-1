@@ -128,6 +128,10 @@ func fizzBuzzIterator(numbers []int, divisorPairing []FizzBuzzPairing, alternate
 			str = strconv.Itoa(nbr)
 		}
 
+		if alternateValue, exists := alternates[nbr]; exists {
+			str = alternateValue
+		}
+
 		finalSlice = append(finalSlice, str)
 	}
 
