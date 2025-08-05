@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a demo project.
+This is a demo project, produced to specific requirements.
 
 ## Getting Started
 
