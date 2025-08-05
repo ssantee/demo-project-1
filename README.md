@@ -31,7 +31,7 @@ You should now be able to access the application at <http://localhost:3000>.
 
 ## Architecture
 
-The application consists of a NextJS front-end/back-end, and serverless services in Go implementing the core business logic. It is designed to deploy to [Vercel](https://vercel.com/home).
+The application consists of a NextJS front-end, and serverless services in Go implementing the core business logic. It is designed to deploy to [Vercel](https://vercel.com/home).
 
 The project started with the [NextJS Admin Dashboard](https://vercel.com/templates/next.js/admin-dashboard) template (you may see a few traces of the boilerplate hanging around).
 
@@ -44,7 +44,7 @@ Illustration of the project structure:
 
 They are split between the UI and the serverless services.
 
-The services should be fairly easy to navigate and understand. There are two, they live under `/api`.
+There are two services, they live under `/api`.
 
 `/api/fbz` implements the FizzBuzz logic, and `/api/fib` implements the Fibonacci logic.
 
@@ -60,15 +60,7 @@ Be sure to look for the gear icon in each UI, as some requirements are hiding th
 
 ### Why this stack?
 
-The stack was chosen because the organization was interested in NextJS. It had been a while since I worked with React/front-end frameworks, so I though it would be a good opportunity to refresh my own knowledge, and hopefully illustrate competency.
-
-Vercel was new to me. I chose it because it promised ease, which I thought would be an important factor in delivering this project in a reasonable time frame.
-
-### Why the services?
-
-It's often beneficial to split core business logic out into separate layers that are indepently deplpoyable and reusable. I thought this design would illustrate some architectural know-how and concern.
-
-Use of Go was both for illustration of flexibility, and expedience, as I've worked with it recently and could move relatively quickly.
+The stack was chosen because the organization was interested in NextJS. 
 
 ## Notes
 
