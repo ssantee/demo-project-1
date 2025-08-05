@@ -2,11 +2,9 @@
 
 ## Overview
 
-This is a demo project with a particular target audience; you know who you are!
+This is a demo project.
 
 ## Getting Started
-
-> Skip the setup and view it live at: [https://rldemo.santee.cloud](https://rldemo.santee.cloud)
 
 Copy or rename `.env.example` to `.env.local`.
 
@@ -54,7 +52,7 @@ The UI is implemented in the NextJS app, in TypeScript, with React, supported by
 
 Be sure to look for the gear icon in each UI, as some requirements are hiding there!
 
-| Requirement | Implemented at             | View Live                               |
+| Requirement | Implemented at             | ~~View Live~~                               |
 |-------------|----------------------------|-----------------------------------------|
 | Part 1      | /app/(dashboard)/fizzbuzz  | <https://rldemo.santee.cloud/fizzbuzz>  |
 | Part 2      | /app/(dashboard)/fibonacci | <https://rldemo.santee.cloud/fibonacci> |
@@ -62,7 +60,7 @@ Be sure to look for the gear icon in each UI, as some requirements are hiding th
 
 ### Why this stack?
 
-The stack was chosen because it is my understanding that you are interested in NextJS. It had been a while since I worked with React/front-end frameworks, so I though it would be a good opportunity to refresh my own knowledge, and hopefully illustrate competency.
+The stack was chosen because the organization was interested in NextJS. It had been a while since I worked with React/front-end frameworks, so I though it would be a good opportunity to refresh my own knowledge, and hopefully illustrate competency.
 
 Vercel was new to me. I chose it because it promised ease, which I thought would be an important factor in delivering this project in a reasonable time frame.
 
