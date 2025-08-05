@@ -54,9 +54,9 @@ Be sure to look for the gear icon in each UI, as some requirements are hiding th
 
 | Requirement | Implemented at             | ~~View Live~~                               |
 |-------------|----------------------------|-----------------------------------------|
-| Part 1      | /app/(dashboard)/fizzbuzz  | <https://rldemo.santee.cloud/fizzbuzz>  |
-| Part 2      | /app/(dashboard)/fibonacci | <https://rldemo.santee.cloud/fibonacci> |
-| Part 3      | /app/(dashboard)/fizzbuzz  | <https://rldemo.santee.cloud/fizzbuzz>  |
+| Part 1      | /app/(dashboard)/fizzbuzz  | ~~<https://rldemo.santee.cloud/fizzbuzz>~~  |
+| Part 2      | /app/(dashboard)/fibonacci | ~~<https://rldemo.santee.cloud/fibonacci>~~ |
+| Part 3      | /app/(dashboard)/fizzbuzz  | ~~<https://rldemo.santee.cloud/fizzbuzz>~~  |
 
 ### Why this stack?
 
