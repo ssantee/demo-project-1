@@ -11,9 +11,9 @@ Copy or rename `.env.example` to `.env.local`.
 Run:
 
 ``` bash
-pnpm install
+npm install
 # then
-pnpm dev
+npm run dev
 ```
 
 ### Local API testing
@@ -22,10 +22,6 @@ In the env.local, swap out the `santee.cloud` endpoints for the `localhost` endp
 ```bash
 npm run api
 ```
-
-> Don't have `pnpm`? [Find it here](https://pnpm.io/installation).
-
-> Don't want `pnpm`? `npm install` and `npm run dev` will have the same effect!
 
 You should now be able to access the application at <http://localhost:3000>.
 
